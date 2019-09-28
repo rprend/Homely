@@ -13,7 +13,7 @@
         android:onClick="pan_left"/>
 
     <!-- These views are hidden unless the permission is granted. -->
-    <org.homely.FancyVrView.MonoscopicView
+    <org.homely.MonoscopicView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

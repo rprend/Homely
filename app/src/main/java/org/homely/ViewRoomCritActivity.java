@@ -1,19 +1,13 @@
 package org.homely;
 
 import android.app.Activity;
-import android.content.res.AssetManager;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Pair;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
-import com.google.vr.sdk.widgets.pano.VrPanoramaView;
+import org.homely.FancyVrView.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,149 +16,96 @@ import androidx.viewpager.widget.ViewPager;
 public class ViewRoomCritActivity extends Activity {
     private static final String TAG = ViewRoomCritActivity.class.getSimpleName();
 
-    private VrPanoramaView panoWidgetView;
-    public boolean loadImageSuccessful;
-    /** Tracks the file to be loaded across the lifetime of this app. **/
-    /** Configuration information for the panorama. **/
-    private VrPanoramaView.Options panoOptions = new VrPanoramaView.Options();
-    private ImageLoaderTask backgroundImageLoaderTask;
+    private MonoscopicView videoView;
+
 
     ViewPager viewPager;
     CardAdaptor adaptor;
     List<Critiques> crits;
 
-
-    /**
-     * Called when the app is launched via the app icon or an intent using the adb command above. This
-     * initializes the app and loads the image to render.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_vrview);
         //360 view
-        panoWidgetView = (VrPanoramaView) findViewById(R.id.pano_view);
-        panoWidgetView.setEventListener(new ActivityEventListener());
-        //panoWidgetView.setDisplayMode(1);
-        panoWidgetView.setStereoModeButtonEnabled(false);
-        panoWidgetView.setFullscreenButtonEnabled(false);
-        panoWidgetView.setInfoButtonEnabled(false);
+        videoView = (MonoscopicView) findViewById(R.id.pano_view);
+        final VideoUiView videoUi = (VideoUiView) findViewById(R.id.video_ui_view);
+
+        videoView.initialize(videoUi);
+        videoView.loadMedia(getIntent());
+
         //bottom cards
         crits = new ArrayList<>();
-        crits.add(new Critiques("Leaky Fridge", "the fridge leaks water"));
-        crits.add(new Critiques("Trashcan Size", "the trashcan is way too big"));
-        crits.add(new Critiques("Bad Window", "the window should be better insulated"));
+        crits.add(new Critiques("Leaky Fridge", "the fridge leaks water",100, 100));
+        crits.add(new Critiques("Trashcan Size", "the trashcan is way too big", 10, 50));
+        crits.add(new Critiques("Bad Window", "the window should be better insulated", -30, 70));
 
         adaptor = new CardAdaptor(crits, this);
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adaptor);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            private int prev_pos = 0;
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (positionOffset != 0) prev_pos = position;
 
-        String image = getIntent().getStringExtra("image");
-        // Initial launch of the app or an Activity recreation due to rotation.
-        showPano(image);
+                Critiques crit = crits.get(position);
+               ((Button) findViewById(R.id.pan_but)).setText("off: " + positionOffset + "\npos: " + position + "\nprev: " + prev_pos);
+               if (prev_pos < position) {
+                   if (positionOffset == 0) {
+                       ((TextView) findViewById(R.id.db)).setText("1");
+                       videoView.renderer.setYawOffset(crit.getYawOffset());
+                       videoView.renderer.setPitchOffset(crit.getPitchOffset());
+                   } else {
+                       videoView.renderer.setYawOffset(crit.getYawOffset() * (positionOffset));
+                       videoView.renderer.setPitchOffset(crit.getPitchOffset() * (positionOffset));
+                   }
+               } else {
+                   if (positionOffset == 0) {
+                       videoView.renderer.setYawOffset(crit.getYawOffset() * (positionOffset));
+                       videoView.renderer.setPitchOffset(crit.getPitchOffset() * (positionOffset));
+                   } else {
+                       videoView.renderer.setYawOffset(crits.get(position+1).getYawOffset() * (positionOffset));
+                       videoView.renderer.setPitchOffset(crits.get(position+1).getPitchOffset() * (positionOffset));
+                   }
+               }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
-    /**
-     * Load custom images based on the Intent or load the default image. See the Javadoc for this
-     * class for information on generating a custom intent via adb.
-     */
-    private void showPano(String image) {
-
-        // Load the bitmap in a background thread to avoid blocking the UI thread. This operation can
-        // take 100s of milliseconds.
-        if (backgroundImageLoaderTask != null) {
-            // Cancel any task from a previous intent sent to this activity.
-            backgroundImageLoaderTask.cancel(true);
-        }
-        backgroundImageLoaderTask = new ImageLoaderTask();
-        backgroundImageLoaderTask.execute(new Pair<String, VrPanoramaView.Options>(image, panoOptions));
+    public void pan(View view) {
+        videoView.renderer.setYawOffset(40);
+        videoView.renderer.setPitchOffset(49);
     }
+
 
     @Override
     protected void onPause() {
-        panoWidgetView.pauseRendering();
+        videoView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        panoWidgetView.resumeRendering();
+        videoView.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        // Destroy the widget and free memory.
-        panoWidgetView.shutdown();
-
-        // The background task has a 5 second timeout so it can potentially stay alive for 5 seconds
-        // after the activity is destroyed unless it is explicitly cancelled.
-        if (backgroundImageLoaderTask != null) {
-            backgroundImageLoaderTask.cancel(true);
-        }
+        videoView.destroy();
         super.onDestroy();
     }
 
 
 
-    /**
-     * Helper class to manage threading.
-     */
-    class ImageLoaderTask extends AsyncTask<Pair<String, VrPanoramaView.Options>, Void, Boolean> {
-
-        /**
-         * Reads the bitmap from disk in the background and waits until it's loaded by pano widget.
-         */
-        @Override
-        protected Boolean doInBackground(Pair<String, VrPanoramaView.Options>... fileInformation) {
-            VrPanoramaView.Options panoOptions = null;  // It's safe to use null VrPanoramaView.Options.
-            InputStream istr = null;
-
-            AssetManager assetManager = getAssets();
-            try {
-                istr = assetManager.open(fileInformation[0].first);
-                panoOptions = new VrPanoramaView.Options();
-                panoOptions.inputType = VrPanoramaView.Options.TYPE_MONO;
-            } catch (IOException e) {
-                Log.e(TAG, "Could not decode default bitmap: " + e);
-                return false;
-            }
-
-
-            panoWidgetView.setPureTouchTracking(true);
-            panoWidgetView.loadImageFromBitmap(BitmapFactory.decodeStream(istr), panoOptions);
-            try {
-                istr.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Could not close input stream: " + e);
-            }
-
-            return true;
-        }
-    }
-
-    /**
-     * Listen to the important events from widget.
-     */
-    private class ActivityEventListener extends VrPanoramaEventListener {
-        /**
-         * Called by pano widget on the UI thread when it's done loading the image.
-         */
-        @Override
-        public void onLoadSuccess() {
-            loadImageSuccessful = true;
-        }
-
-        /**
-         * Called by pano widget on the UI thread on any asynchronous error.
-         */
-        @Override
-        public void onLoadError(String errorMessage) {
-            loadImageSuccessful = false;
-            Toast.makeText(
-                    ViewRoomCritActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_LONG)
-                    .show();
-            Log.e(TAG, "Error loading pano: " + errorMessage);
-        }
-    }
 }

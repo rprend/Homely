@@ -5,13 +5,22 @@ public class Critiques {
     private int image;
     private String title;
     private String desc;
-
-    public Critiques(String title, String desc) {
+    private float pitchOffset;
+    private float yawOffset;
+    public Critiques(String title, String desc, float pitchOffset, float yawOffset) {
         this.title = title;
         this.desc = desc;
+        this.pitchOffset = pitchOffset;
+        this.yawOffset = yawOffset;
     }
 
+    public float getPitchOffset() {
+        return pitchOffset;
+    }
 
+    public float getYawOffset() {
+        return yawOffset;
+    }
 
     public String getTitle() {
         return title;

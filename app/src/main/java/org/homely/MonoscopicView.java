@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.homely.FancyVrView;
+package org.homely;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +32,8 @@ import android.view.View;
 
 import com.google.vr.sdk.base.Eye.Type;
 
+import org.homely.FancyVrView.MediaLoader;
+import org.homely.FancyVrView.VideoUiView;
 import org.homely.FancyVrView.rendering.SceneRenderer;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -140,7 +142,7 @@ public final class MonoscopicView extends GLSurfaceView {
       // since we need the calculated roll of the phone to be independent of the phone's pitch &
       // yaw. Any operation that decomposes rotation to Euler angles needs to be performed
       // carefully.
-      SensorManager.remapCoordinateSystem(
+      /*SensorManager.remapCoordinateSystem(
           phoneInWorldSpaceMatrix,
           SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Z,
           remappedPhoneMatrix);
@@ -152,7 +154,7 @@ public final class MonoscopicView extends GLSurfaceView {
       // assumes Y points North and Z points to the sky. OpenGL has Y pointing up and Z pointing
       // toward the user.
       Matrix.rotateM(phoneInWorldSpaceMatrix, 0, 90, 1, 0, 0);
-      renderer.setDeviceOrientation(phoneInWorldSpaceMatrix, roll);
+      renderer.setDeviceOrientation(phoneInWorldSpaceMatrix, roll);*/
     }
 
     @Override
@@ -347,7 +349,7 @@ public final class MonoscopicView extends GLSurfaceView {
       touchPitch = pitchDegrees;
       updatePitchMatrix();
     }
-    public synchronized float getPitchOffset() {
+    public float getPitchOffset() {
       return touchPitch;
     }
 
@@ -356,10 +358,10 @@ public final class MonoscopicView extends GLSurfaceView {
     public synchronized void setYawOffset(float yawDegrees) {
       Matrix.setRotateM(touchYawMatrix, 0, -yawDegrees, 0, 1, 0);
     }
-    /** Set the yaw offset matrix. */
+    /** Set the yaw offset matrix. *//*
     @UiThread
     public synchronized float[] getYawOffset() {
       return touchYawMatrix;
-    }
+    }*/
   }
 }

@@ -2,10 +2,10 @@ package org.homely.FancyVrView;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.opengl.Matrix;
 import android.os.Bundle;
 import android.view.View;
 
+import org.homely.MonoscopicView;
 import org.homely.R;
 
 public class FancyViewRoomCritActivity extends Activity {
@@ -28,10 +28,10 @@ public class FancyViewRoomCritActivity extends Activity {
     public void pan_left(View view) {
         //videoView.TouchTracker.accumulatedTouchOffsetDegrees
         //videoView.renderer.setYawOffset(-40);
-        float prev_pOff = videoView.renderer.getPitchOffset();
-        //videoView.renderer.setPitchOffset(prev_pOff - 40);
-        float[] prev_yOff = videoView.renderer.getYawOffset();
-        Matrix.rotateM(prev_yOff, 0, 40, 0, 1, 0);
+        //float prev_pOff = videoView.renderer.getPitchOffset();
+        //videoView.renderer.setPitchOffset(40);
+        //float[] prev_yOff = videoView.renderer.getYawOffset();
+        //Matrix.rotateM(prev_yOff, 0, 40, 0, 1, 0);
     }
 
     /**
