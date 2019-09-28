@@ -45,7 +45,10 @@ public class HouseVRViewActivity extends Activity {
         //360 view
         panoWidgetView = (VrPanoramaView) findViewById(R.id.pano_view);
         panoWidgetView.setEventListener(new ActivityEventListener());
-
+        //panoWidgetView.setDisplayMode(1);
+        panoWidgetView.setStereoModeButtonEnabled(false);
+        panoWidgetView.setFullscreenButtonEnabled(false);
+        panoWidgetView.setInfoButtonEnabled(false);
         //bottom cards
         crits = new ArrayList<>();
         crits.add(new Critiques("Leaky Fridge", "the fridge leaks water"));
