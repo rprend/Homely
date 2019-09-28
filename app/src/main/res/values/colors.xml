@@ -7,5 +7,12 @@
     <color name="background">#F3F3F3</color>
     <color name="textColor">#434343</color>
 
+
+    <color name="red">#F06723</color>
+    <color name="orange">#F79220</color>
+    <color name="yellow">#FCC216</color>
+    <color name="green">#B7B433</color>
+    <color name="blue">#4F85C5</color>
+
     <color name="black_overlay">#66000000</color>
 </resources>
