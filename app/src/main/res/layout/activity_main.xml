@@ -31,7 +31,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:background="@color/background"
-        app:itemIconTint="@color/textColor"
+        app:itemIconTint="@drawable/iconcolors"
         app:itemTextColor="@color/textColor"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_navigation" />
