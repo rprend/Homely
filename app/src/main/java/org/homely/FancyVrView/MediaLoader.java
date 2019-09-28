@@ -174,7 +174,7 @@ public class MediaLoader {
 
           // Decoding a large image can take 100+ ms.
           AssetManager assetManager = context.getAssets();
-          InputStream istr = assetManager.open("table_360.jpg"); //intent[0].getStringExtra("image"));
+          InputStream istr = assetManager.open(intent[0].getStringExtra("image")); //intent[0].getStringExtra("image"));
           mediaImage= BitmapFactory.decodeStream(istr);
           //mediaImage = BitmapFactory.decodeFile(uri.getPath());
 
