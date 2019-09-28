@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements ExploreFragment.O
 
 
         final House myHouse = new House("User", R.drawable.armory101);
-        myHouse.addRoom(new Room("Kitchen", "outside_360.jpg"));
+        myHouse.addRoom(new Room("Kitchen", "kitchen_360.jpg"));
 
         FrameLayout frame = findViewById(R.id.fragmentPlaceholder);
         if (savedInstanceState == null) {
