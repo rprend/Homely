@@ -1,7 +1,6 @@
 package org.homely.explore_activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,7 +16,6 @@ import android.widget.ListView;
 
 import org.homely.House;
 import org.homely.R;
-import org.homely.house_activity.HouseActivity;
 import org.homely.house_activity.HouseFragment;
 
 /**
@@ -95,9 +93,6 @@ public class ExploreFragment extends Fragment {
                 ft.replace(R.id.fragmentPlaceholder, new_frag);
                 ft.commit();
 
-//                Intent intent = new Intent(view.getContext(), HouseActivity.class);
-//                intent.putExtra("House", clickedHouse);
-//                startActivity(intent);
             }
         });
         return rootView;
