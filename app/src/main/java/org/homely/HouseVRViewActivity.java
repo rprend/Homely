@@ -1,44 +1,38 @@
 package org.homely;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.Pair;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.viewpager.widget.ViewPager;
 
 public class HouseVRViewActivity extends Activity {
     private static final String TAG = HouseVRViewActivity.class.getSimpleName();
 
     private VrPanoramaView panoWidgetView;
-    /**
-     * Arbitrary variable to track load status. In this example, this variable should only be accessed
-     * on the UI thread. In a real app, this variable would be code that performs some UI actions when
-     * the panorama is fully loaded.
-     */
     public boolean loadImageSuccessful;
     /** Tracks the file to be loaded across the lifetime of this app. **/
-    private Uri fileUri;
     /** Configuration information for the panorama. **/
     private VrPanoramaView.Options panoOptions = new VrPanoramaView.Options();
     private ImageLoaderTask backgroundImageLoaderTask;
+
+    ViewPager viewPager;
+    CardAdaptor adaptor;
+    List<Critiques> crits;
+
 
     /**
      * Called when the app is launched via the app icon or an intent using the adb command above. This
@@ -48,37 +42,29 @@ public class HouseVRViewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_vrview);
-
+        //360 view
         panoWidgetView = (VrPanoramaView) findViewById(R.id.pano_view);
         panoWidgetView.setEventListener(new ActivityEventListener());
 
+        //bottom cards
+        crits = new ArrayList<>();
+        crits.add(new Critiques("Leaky Fridge", "the fridge leaks water"));
+        crits.add(new Critiques("Trashcan Size", "the trashcan is way too big"));
+        crits.add(new Critiques("Bad Window", "the window should be better insulated"));
+
+        adaptor = new CardAdaptor(crits, this);
+        viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(adaptor);
+
         // Initial launch of the app or an Activity recreation due to rotation.
-        handleIntent(getIntent());
+        showPano("table_360.jpg");
     }
 
     /**
      * Load custom images based on the Intent or load the default image. See the Javadoc for this
      * class for information on generating a custom intent via adb.
      */
-    private void handleIntent(Intent intent) {
-        // Determine if the Intent contains a file to load.
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            Log.i(TAG, "ACTION_VIEW Intent recieved");
-
-            fileUri = intent.getData();
-            if (fileUri == null) {
-                Log.w(TAG, "No data uri specified. Use \"-d /path/filename\".");
-            } else {
-                Log.i(TAG, "Using file " + fileUri.toString());
-            }
-
-            panoOptions.inputType = intent.getIntExtra("inputType", VrPanoramaView.Options.TYPE_MONO);
-            Log.i(TAG, "Options.inputType = " + panoOptions.inputType);
-        } else {
-            Log.i(TAG, "Intent is not ACTION_VIEW. Using default pano image.");
-            fileUri = null;
-            panoOptions.inputType = VrPanoramaView.Options.TYPE_MONO;
-        }
+    private void showPano(String image) {
 
         // Load the bitmap in a background thread to avoid blocking the UI thread. This operation can
         // take 100s of milliseconds.
@@ -87,15 +73,13 @@ public class HouseVRViewActivity extends Activity {
             backgroundImageLoaderTask.cancel(true);
         }
         backgroundImageLoaderTask = new ImageLoaderTask();
-        backgroundImageLoaderTask.execute(Pair.create("stacked.jpg", panoOptions));
+        backgroundImageLoaderTask.execute(new Pair<String, VrPanoramaView.Options>(image, panoOptions));
     }
 
     @Override
     protected void onPause() {
         panoWidgetView.pauseRendering();
-        super.onPause();{
-                Log.i(TAG, "Using file " + fileUri.toString());
-            }
+        super.onPause();
     }
 
     @Override
@@ -117,6 +101,8 @@ public class HouseVRViewActivity extends Activity {
         super.onDestroy();
     }
 
+
+
     /**
      * Helper class to manage threading.
      */
@@ -132,17 +118,16 @@ public class HouseVRViewActivity extends Activity {
 
             AssetManager assetManager = getAssets();
             try {
-                istr = assetManager.open("outdoor_360.jpg");
+                istr = assetManager.open(fileInformation[0].first);
                 panoOptions = new VrPanoramaView.Options();
                 panoOptions.inputType = VrPanoramaView.Options.TYPE_MONO;
-
             } catch (IOException e) {
                 Log.e(TAG, "Could not decode default bitmap: " + e);
                 return false;
             }
 
 
-
+            panoWidgetView.setPureTouchTracking(true);
             panoWidgetView.loadImageFromBitmap(BitmapFactory.decodeStream(istr), panoOptions);
             try {
                 istr.close();

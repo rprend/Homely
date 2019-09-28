@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Layout for the 2D Activity. It will either show a permission button or the MonoscopicView. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_root"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <com.google.vr.sdk.widgets.pano.VrPanoramaView
         android:id="@+id/pano_view"
-        android:layout_margin="5dip"
+        android:layout_margin="0dp"
         android:layout_width="match_parent"
         android:scrollbars="@null"
         android:layout_height="match_parent"
         />
 
-</LinearLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:foregroundGravity="center"
+        android:id="@+id/viewPager"
+        android:overScrollMode="never"
+        android:layout_margin="0dp"
+        android:clipToPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pano_view"
+        />
+
+</RelativeLayout>
