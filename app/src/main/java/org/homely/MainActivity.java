@@ -19,8 +19,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.homely.explore_activity.ExploreFragment;
+import org.homely.house_activity.HouseFragment;
 
-public class MainActivity extends AppCompatActivity implements ExploreFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements ExploreFragment.OnFragmentInteractionListener , HouseFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

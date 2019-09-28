@@ -45,7 +45,7 @@ public class HouseActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
-                System.out.println("Clicked " + position);
+
 
                 Intent intent = new Intent(view.getContext(), AddRoomCritActivity.class);
                 intent.putExtra("image", house.getRooms().get(position).getImagePath());

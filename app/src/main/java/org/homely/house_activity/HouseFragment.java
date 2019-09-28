@@ -1,10 +1,11 @@
-package org.homely.explore_activity;
+package org.homely.house_activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,93 +16,77 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.homely.AddRoomCritActivity;
 import org.homely.House;
 import org.homely.R;
-import org.homely.house_activity.HouseActivity;
-import org.homely.house_activity.HouseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ExploreFragment.OnFragmentInteractionListener} interface
+ * {@link HouseFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ExploreFragment#newInstance} factory method to
+ * Use the {@link HouseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExploreFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+public class HouseFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    static final String HOUSE_KEY = "house";
+    House house;
 
-    public ExploreFragment() {
+    public HouseFragment() {
         // Required empty public constructor
+    }
+
+    public HouseFragment(House house) {
+        this.house = house;
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExploreFragment.
+     * @return A new instance of fragment HouseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExploreFragment newInstance(String param1, String param2) {
-        ExploreFragment fragment = new ExploreFragment();
+    public static HouseFragment newInstance(House house) {
+        HouseFragment fragment = new HouseFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        args.putSerializable(HOUSE_KEY, house);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            house = (House) getArguments().getSerializable(HOUSE_KEY);
         }
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_explore, container, false);
+        View rootView =
+                inflater.inflate(R.layout.fragment_house, container, false);
 
-        final ListView listview = (ListView) rootView.findViewById(R.id.explore_listview);
-        final HouseAdapter adapter = new HouseAdapter(getActivity().getApplicationContext());
-        listview.setAdapter(adapter);
+        final ListView listView = (ListView) rootView.findViewById(R.id.house_listview);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final RoomAdapter adapter = new RoomAdapter(rootView.getContext(), house);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item text from ListView
-                House clickedHouse = adapter.getHouse(position);
+                Intent intent = new Intent(view.getContext(), AddRoomCritActivity.class);
+                intent.putExtra("image", house.getRooms().get(position).getImagePath());
+                startActivity(intent);
 
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-
-                HouseFragment new_frag = new HouseFragment(clickedHouse);
-                ft.addToBackStack(null);
-                ft.replace(R.id.fragmentPlaceholder, new_frag);
-                ft.commit();
-
-//                Intent intent = new Intent(view.getContext(), HouseActivity.class);
-//                intent.putExtra("House", clickedHouse);
-//                startActivity(intent);
             }
         });
         return rootView;
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event

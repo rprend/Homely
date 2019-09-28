@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".explore_activity.ExploreFragment">
+    tools:context=".house_activity.HouseFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/houseFragment">
 
         <ListView
-            android:id="@+id/explore_listview"
+            android:id="@+id/house_listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
 </FrameLayout>
