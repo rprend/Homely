@@ -26,7 +26,7 @@ public class HouseAdapter extends BaseAdapter {
 
         houses.add(new House("Dmitry", R.drawable.armory101));
         houses.get(0).addRoom(new Room("Dining room", "table_360.jpg"));
-//        houses.get(0).addRoom("Bedroom", R.drawable.ryan_room);
+        houses.get(0).addRoom(new Room("Bedroom", "ryanroom.jpg"));
 
         houses.add(new House("Teddy", R.drawable.siebel));
         houses.add(new House("Sarah", R.drawable.allen));

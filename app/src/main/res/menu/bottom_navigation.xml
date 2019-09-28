@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.MaterialComponents.BottomNavigationView.Colored">
     <item android:id="@+id/explore_menu"
         android:icon="@drawable/baseline_home_black_18dp"
         android:title="Explore"/>
