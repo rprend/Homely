@@ -29,11 +29,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.android.support:appcompat-v7:29.1.1'
-    compile 'com.android.support:design:29.2.1'
+    implementation 'com.android.support:design:29.2.1'
+
+    implementation 'com.google.vr:sdk-base:1.180.0'
+
+    implementation 'com.google.vr:sdk-controller:1.180.0'
     //for google vr
     implementation 'com.google.vr:sdk-panowidget:1.180.0'
-
-
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     testImplementation 'junit:junit:4.12'
