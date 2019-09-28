@@ -59,10 +59,16 @@ public class AddRoomCritActivity extends Activity {
 
 
     public void capture_crit(View view) {
-        view.setVisibility(View.GONE);
+        view.setVisibility(View.VISIBLE);
         final View edit_card = findViewById(R.id.edit_card);
 //        edit_card.setVisibility(View.VISIBLE);
      //   edit_card.setAlpha(1.0f);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                send_crit(v);
+            }
+        });
 
         edit_card.animate().translationY(edit_card.getHeight())
                 .setDuration(0)
@@ -99,6 +105,12 @@ public class AddRoomCritActivity extends Activity {
     }
 
     public void send_crit(View view) {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capture_crit(v);
+            }
+        });
         final View edit_card = findViewById(R.id.edit_card);
         edit_card.animate().translationY(edit_card.getHeight())
                 .setDuration(getResources().getInteger(android.R.integer.config_longAnimTime))

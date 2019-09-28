@@ -46,13 +46,6 @@
                 android:layout_height="200dp"
                 />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="submit"
-                android:onClick="send_crit"
-                />
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

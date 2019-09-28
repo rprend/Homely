@@ -29,7 +29,7 @@ public class HouseAdapter extends BaseAdapter {
         houses.get(0).addRoom(new Room("Bedroom", "ryanroom.jpg"));
 
         houses.add(new House("Teddy", R.drawable.siebel));
-        houses.add(new House("Sarah", R.drawable.allen));
+        //houses.add(new House("Sarah", R.drawable.allen));
     }
 
     @Override
