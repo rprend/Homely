@@ -10,10 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.homely.House;
-import org.homely.HouseCritActivity;
-import org.homely.HouseVRViewActivity;
+import org.homely.AddRoomCritActivity;
 import org.homely.R;
-import org.homely.explore_activity.HouseAdapter;
 
 public class HouseActivity extends AppCompatActivity {
 
@@ -49,7 +47,7 @@ public class HouseActivity extends AppCompatActivity {
                 // Get the selected item text from ListView
                 System.out.println("Clicked " + position);
 
-                Intent intent = new Intent(view.getContext(), HouseCritActivity.class);
+                Intent intent = new Intent(view.getContext(), AddRoomCritActivity.class);
                 intent.putExtra("image", house.getRooms().get(position).getImagePath());
                 startActivity(intent);
 

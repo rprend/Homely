@@ -19,8 +19,8 @@ import java.util.List;
 
 import androidx.viewpager.widget.ViewPager;
 
-public class HouseVRViewActivity extends Activity {
-    private static final String TAG = HouseVRViewActivity.class.getSimpleName();
+public class ViewRoomCritActivity extends Activity {
+    private static final String TAG = ViewRoomCritActivity.class.getSimpleName();
 
     private VrPanoramaView panoWidgetView;
     public boolean loadImageSuccessful;
@@ -162,7 +162,7 @@ public class HouseVRViewActivity extends Activity {
         public void onLoadError(String errorMessage) {
             loadImageSuccessful = false;
             Toast.makeText(
-                    HouseVRViewActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_LONG)
+                    ViewRoomCritActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_LONG)
                     .show();
             Log.e(TAG, "Error loading pano: " + errorMessage);
         }

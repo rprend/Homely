@@ -10,9 +10,6 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Interpolator;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
@@ -21,8 +18,8 @@ import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class HouseCritActivity extends Activity {
-    private static final String TAG = HouseCritActivity.class.getSimpleName();
+public class AddRoomCritActivity extends Activity {
+    private static final String TAG = AddRoomCritActivity.class.getSimpleName();
 
     private VrPanoramaView panoWidgetView;
     public boolean loadImageSuccessful;
@@ -193,7 +190,7 @@ public class HouseCritActivity extends Activity {
         public void onLoadError(String errorMessage) {
             loadImageSuccessful = false;
             Toast.makeText(
-                    HouseCritActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_SHORT)
+                    AddRoomCritActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_SHORT)
                     .show();
             Log.e(TAG, "Error loading pano: " + errorMessage);
         }

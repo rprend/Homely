@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name=".HouseCritActivity"/>
-        <activity android:name=".HouseVRViewActivity"/>
+        <activity android:name=".AddRoomCritActivity"/>
+        <activity android:name=".ViewRoomCritActivity"/>
 
 
         <activity android:name=".house_activity.HouseListview"></activity>
