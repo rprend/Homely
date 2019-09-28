@@ -7,17 +7,12 @@
     android:layout_height="match_parent">
 
 
-    <!-- These views are hidden unless the permission is granted. -->
-    <org.homely.MonoscopicView
-        android:id="@+id/video_view"
+    <com.google.vr.sdk.widgets.pano.VrPanoramaView
+        android:id="@+id/pano_view"
+        android:layout_margin="5dip"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="top"
-        android:layout_weight="1"
-        android:visibility="gone"/>
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        layout="@layout/video_ui"
-        android:visibility="gone"/>
+        android:scrollbars="@null"
+        android:layout_height="match_parent"
+        />
+
 </LinearLayout>
