@@ -44,8 +44,8 @@ public class HouseCritActivity extends Activity {
         panoWidgetView.setStereoModeButtonEnabled(false);
         panoWidgetView.setFullscreenButtonEnabled(false);
         panoWidgetView.setInfoButtonEnabled(false);
-
-        showPano("table_360.jpg");
+        String image = getIntent().getStringExtra("image");
+        showPano(image);
     }
 
     private void showPano(String image) {
