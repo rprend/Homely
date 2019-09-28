@@ -97,7 +97,7 @@ public class HouseCritActivity extends Activity {
 
 
 
-        panoWidgetView.setPureTouchTracking(true);
+        panoWidgetView.pauseRendering();
 
     }
 
@@ -133,7 +133,7 @@ public class HouseCritActivity extends Activity {
         Toast toast = Toast.makeText(this, "Critique Sumbitted", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP,0,20);
         toast.show();
-        panoWidgetView.setPureTouchTracking(false);
+        panoWidgetView.resumeRendering();
         findViewById(R.id.fab).setVisibility(View.VISIBLE);
 
     }
