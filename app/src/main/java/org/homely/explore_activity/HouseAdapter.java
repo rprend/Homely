@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import org.homely.House;
 import org.homely.R;
+import org.homely.Room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class HouseAdapter extends BaseAdapter {
         inflater = (LayoutInflater.from(applicationContext));
 
         houses.add(new House("Dmitry", R.drawable.armory101));
-        houses.get(0).addRoom("Dining room", R.drawable.table_panorama);
+        houses.get(0).addRoom(new Room("Dining room", "table_360.jpg"));
 //        houses.get(0).addRoom("Bedroom", R.drawable.ryan_room);
 
         houses.add(new House("Teddy", R.drawable.siebel));

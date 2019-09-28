@@ -16,8 +16,8 @@ public class House implements Serializable {
         this.image = image_id;
     }
 
-    public void addRoom(String name, int image_id) {
-        this.rooms.add(new Room(name, image_id));
+    public void addRoom(Room newRoom) {
+        this.rooms.add(newRoom);
     }
 
     public String getUser() {

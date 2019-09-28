@@ -3,10 +3,15 @@ package org.homely.house_activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.homely.House;
+import org.homely.HouseCritActivity;
+import org.homely.HouseVRViewActivity;
 import org.homely.R;
 import org.homely.explore_activity.HouseAdapter;
 
@@ -38,18 +43,17 @@ public class HouseActivity extends AppCompatActivity {
         final RoomAdapter adapter = new RoomAdapter(this, house);
         listView.setAdapter(adapter);
 
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                // Get the selected item text from ListView
-//                System.out.println("Clicked " + position);
-//                House clickedHouse = adapter.getHouse(position);
-//
-//                Intent intent = new Intent(view.getContext(), HouseActivity.class);
-//                intent.putExtra("House", clickedHouse);
-//                startActivity(intent);
-//
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected item text from ListView
+                System.out.println("Clicked " + position);
+
+                Intent intent = new Intent(view.getContext(), HouseCritActivity.class);
+                intent.putExtra("image", house.getRooms().get(position).getImagePath());
+                startActivity(intent);
+
+            }
+        });
     }
 }

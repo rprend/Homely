@@ -1,6 +1,7 @@
 package org.homely.house_activity;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import org.homely.House;
 import org.homely.R;
 import org.homely.Room;
 
+import java.io.IOException;
 import java.util.List;
 
 public class RoomAdapter extends BaseAdapter {
@@ -51,9 +53,13 @@ public class RoomAdapter extends BaseAdapter {
         houseLabel.setText(room.getName());
 
         // Crops a photo
-        Bitmap bitmap = BitmapFactory.decodeResource(parent.getResources(), room.getImage_id());
+        try {
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getAssets().open(room.getImagePath()));
 //        Bitmap mBitmap  = Bitmap.createBitmap(bitmap, 0, 0, 1080, 1080);
         houseImage.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return view;
     }
 }
