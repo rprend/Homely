@@ -27,8 +27,12 @@ public class MainActivity extends AppCompatActivity implements ExploreFragment.O
         setContentView(R.layout.activity_main);
 
 
+        FragmentTransaction fragtrans = getSupportFragmentManager().beginTransaction();
+
         final House myHouse = new House("User", R.drawable.armory101);
         myHouse.addRoom(new Room("Kitchen", "kitchen_360.jpg"));
+        myHouse.addRoom(new Room("Bedroom", "ryanroom.jpg"));
+        myHouse.addRoom(new Room("Living room", "drumroom.jpg"));
 
         FrameLayout frame = findViewById(R.id.fragmentPlaceholder);
         if (savedInstanceState == null) {
@@ -46,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements ExploreFragment.O
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getTitle().toString()) {
                     case "Explore":
-                        currentFragment = new ExploreFragment();
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        currentFragment = new ExploreFragment();
                         ft.replace(R.id.fragmentPlaceholder, currentFragment).commit();
                         myToolbar.setTitle("Explore");
                         break;
