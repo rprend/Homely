@@ -16,17 +16,20 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:backgroundTint="@color/background"
+        >
 
             <TextView
                 android:id="@+id/title"
-                android:textColor="#262626"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:text="Brochure"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                />
 
             <TextView
                 android:id="@+id/desc"
