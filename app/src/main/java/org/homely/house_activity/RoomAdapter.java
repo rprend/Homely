@@ -55,8 +55,9 @@ public class RoomAdapter extends BaseAdapter {
         // Crops a photo
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(context.getAssets().open(room.getImagePath()));
-//        Bitmap mBitmap  = Bitmap.createBitmap(bitmap, 0, 0, 1080, 1080);
-        houseImage.setImageBitmap(bitmap);
+            Bitmap mBitmap  = Bitmap.createBitmap(bitmap, 0, 0, 1080, 1080);
+            houseImage.setImageBitmap(bitmap);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
