@@ -22,10 +22,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/pano_view"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@drawable/icon"
         android:layout_margin="16dp"
         app:fabSize="normal"
-        app:rippleColor="@color/colorAccent"
+        app:backgroundTint="@color/background"
+        app:rippleColor="@color/textColor"
         android:onClick="capture_crit"
         />
 

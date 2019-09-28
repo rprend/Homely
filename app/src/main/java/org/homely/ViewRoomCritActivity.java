@@ -50,10 +50,8 @@ public class ViewRoomCritActivity extends Activity {
                 if (positionOffset != 0) prev_pos = position;
 
                 Critiques crit = crits.get(position);
-               ((Button) findViewById(R.id.pan_but)).setText("off: " + positionOffset + "\npos: " + position + "\nprev: " + prev_pos);
                if (prev_pos < position) {
                    if (positionOffset == 0) {
-                       ((TextView) findViewById(R.id.db)).setText("1");
                        videoView.renderer.setYawOffset(crit.getYawOffset());
                        videoView.renderer.setPitchOffset(crit.getPitchOffset());
                    } else {
