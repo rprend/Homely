@@ -59,9 +59,9 @@ public class HouseVRViewActivity extends Activity {
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adaptor);
 
-        String image = getIntent().getStringExtra("image");
+        //String image = getIntent().getStringExtra("image");
         // Initial launch of the app or an Activity recreation due to rotation.
-        showPano(image);
+        showPano("table_360.jpg");
     }
 
     /**
