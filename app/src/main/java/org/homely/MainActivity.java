@@ -1,7 +1,5 @@
 package org.homely;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements ExploreFragment.O
         setContentView(R.layout.activity_main);
 
 
-        final House myHouse = new House("My", R.drawable.armory101);
+        final House myHouse = new House("User", R.drawable.armory101);
         myHouse.addRoom(new Room("Kitchen", "outside_360.jpg"));
 
         FrameLayout frame = findViewById(R.id.fragmentPlaceholder);

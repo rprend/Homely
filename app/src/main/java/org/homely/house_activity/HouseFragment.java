@@ -19,6 +19,7 @@ import android.widget.ListView;
 import org.homely.AddRoomCritActivity;
 import org.homely.House;
 import org.homely.R;
+import org.homely.ViewRoomCritActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,16 +77,29 @@ public class HouseFragment extends Fragment {
         final RoomAdapter adapter = new RoomAdapter(rootView.getContext(), house);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the selected item text from ListView
-                Intent intent = new Intent(view.getContext(), AddRoomCritActivity.class);
-                intent.putExtra("image", house.getRooms().get(position).getImagePath());
-                startActivity(intent);
+        if (house.getUser().equals("User")) {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Get the selected item text from ListView
+                    Intent intent = new Intent(view.getContext(), ViewRoomCritActivity.class);
+                    intent.putExtra("image", house.getRooms().get(position).getImagePath());
+                    startActivity(intent);
 
-            }
-        });
+                }
+            });
+        } else {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Get the selected item text from ListView
+                    Intent intent = new Intent(view.getContext(), AddRoomCritActivity.class);
+                    intent.putExtra("image", house.getRooms().get(position).getImagePath());
+                    startActivity(intent);
+
+                }
+            });
+        }
         return rootView;
     }
 
