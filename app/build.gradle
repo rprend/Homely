@@ -29,6 +29,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.android.support:appcompat-v7:29.1.1'
+    compile 'com.android.support:design:29.2.1'
     //for google vr
     implementation 'com.google.vr:sdk-panowidget:1.180.0'
 }

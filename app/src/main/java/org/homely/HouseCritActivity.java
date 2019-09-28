@@ -1,5 +1,6 @@
 package org.homely;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
+import android.view.View;
+import android.view.animation.Interpolator;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
@@ -54,6 +60,83 @@ public class HouseCritActivity extends Activity {
         backgroundImageLoaderTask.execute(new Pair<String, VrPanoramaView.Options>(image, panoOptions));
     }
 
+
+    public void capture_crit(View view) {
+        view.setVisibility(View.GONE);
+        final View edit_card = findViewById(R.id.edit_card);
+//        edit_card.setVisibility(View.VISIBLE);
+     //   edit_card.setAlpha(1.0f);
+
+        edit_card.animate().translationY(edit_card.getHeight())
+                .setDuration(0)
+                .setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                edit_card.setVisibility(View.VISIBLE);
+                edit_card.animate().translationY(0)
+                        .setDuration(getResources().getInteger(android.R.integer.config_longAnimTime))
+                        .setListener(null);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+
+
+
+        panoWidgetView.setPureTouchTracking(true);
+
+    }
+
+    public void send_crit(View view) {
+        final View edit_card = findViewById(R.id.edit_card);
+        edit_card.animate().translationY(edit_card.getHeight())
+                .setDuration(getResources().getInteger(android.R.integer.config_longAnimTime))
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        edit_card.setVisibility(View.INVISIBLE);
+                        edit_card.animate().translationY(-edit_card.getHeight())
+                                .setDuration(0)
+                                .setListener(null);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+
+        Toast toast = Toast.makeText(this, "Critique Sumbitted", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP,0,20);
+        toast.show();
+        panoWidgetView.setPureTouchTracking(false);
+        findViewById(R.id.fab).setVisibility(View.VISIBLE);
+
+    }
     /**
      * Helper class to manage threading.
      */
@@ -78,7 +161,8 @@ public class HouseCritActivity extends Activity {
             }
 
 
-            panoWidgetView.setPureTouchTracking(true);
+            //panoWidgetView.setPureTouchTracking(true);
+            panoWidgetView.setFlingingEnabled(true);
             panoWidgetView.loadImageFromBitmap(BitmapFactory.decodeStream(istr), panoOptions);
             try {
                 istr.close();
@@ -109,7 +193,7 @@ public class HouseCritActivity extends Activity {
         public void onLoadError(String errorMessage) {
             loadImageSuccessful = false;
             Toast.makeText(
-                    HouseCritActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_LONG)
+                    HouseCritActivity.this, "Error loading pano: " + errorMessage, Toast.LENGTH_SHORT)
                     .show();
             Log.e(TAG, "Error loading pano: " + errorMessage);
         }
